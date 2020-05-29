@@ -8,7 +8,8 @@ class Robot extends Component {
     }
 
     render() {
-        const {robot_card} = this.props
+        const {robot_card} = this.props;
+        console.log('image url: ' + robot_card.image_url);
         return (
             <div className="robot" 
             // style={{display: "flex", justifyContent: "center"}}
@@ -18,12 +19,13 @@ class Robot extends Component {
                 <div>
                     {(robot_card.name==='') &&
                         <div>
-                            Press 'Draw Card!' button to start game.
+                            Who will win?
                         </div>
                     }
                     {(robot_card.name!=='') && 
                         <div>
-                            New Card: {robot_card.name}
+                            {robot_card.name}<br/>
+                            <img src={robot_card.image_url} style={{ height: '30vh', width: '10vw' }}/>
                         </div>
                     }
                 </div>

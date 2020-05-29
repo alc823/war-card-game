@@ -1,59 +1,41 @@
 import React, {Component} from 'react';
-import './DrawCard.css';
-import './Score.js';
+// import './DrawCard.css';
+import './Score.css';
 import { isEmpty } from "lodash";
 
 class Score extends Component {
     render() {
-        const {robot_score, player_score, round_winner, point_hold, deck} = this.props;
-        console.log("round_winner: " + this.props.round_winner)
+        const {robot_score, player_score, robot_overall_score, player_overall_score} = this.props;
+        // console.log("round_winner: " + this.props.round_winner)
         return (
             <div className="score" style={{textAlign: "center"}}>
-                {round_winner && !isEmpty(deck) &&
-                    <div>
-                        You have won the round!
+                { !(robot_score === 0 && player_score === 0) &&
+                    <div className="score_info">
+                        Score<br/>
+                        Robot: {robot_score}<br/>
+                        Player: {player_score}<br/>
                     </div>
                 }
-                {!round_winner && point_hold > 1 && !isEmpty(deck) &&
+                {robot_score === 0 && player_score === 0 &&
                     <div>
-                        Tie! {point_hold} points will be give to the winner of the next round.
-                    </div>
-                }
-                {!round_winner && point_hold === 1 && robot_score !== 0 && !isEmpty(deck) &&
-                    <div>
-                        Robot has won the round!
-                    </div>
-                }
-                
-
-                {isEmpty(deck) &&
-                    <div>
-                    {robot_score > player_score &&
-                        <div>
-                            You finished the game!<br/>
-                            Robot won! Better luck next time!
-                        </div>
-
-                    }
-                    {robot_score < player_score &&
-                        <div>
-                            You finished the game!<br/>
-                            You won!
-                        </div>
-                    }
-                    {robot_score === player_score &&
-                        <div>
-                            You finished the game!<br/>
-                            Tie! You are neither a winner nor a loser!
-                        </div>
-                    }
+                        {robot_overall_score === 0 && player_overall_score === 0 &&
+                            <div className="info">
+                            What is war?<br/>
+                            In this case, war is a card game where each player draws a card at random from a deck, and the card with the highest rank wins.
+                            Ready to get started? Then press 'Start game!' to draw the first card!
+                            </div>
+                        }
+                        {!(robot_overall_score === 0 && player_overall_score === 0) &&
+                            <div className="score_info">
+                            Overall Score<br/>
+                            Robot: {robot_overall_score}<br/>
+                            Player: {player_overall_score}<br/>
+                            </div>
+                        }
                     </div>
                     
                 }
-                <br/>
-                Score<br/>
-                Robot: {robot_score}<br/>
-                Player: {player_score}<br/>
+                
             </div>
         );
     }

@@ -9,21 +9,22 @@ class Player extends Component {
 
     render() {
         const {player_card} = this.props;
+        console.log("image: " + player_card.image_url);
         return (
             <div className="player" 
-            // style={{display: "flex", justifyContent: "center", flexWrap: "wrap"}}
             style={{textAlign: "center"}}
             >
                 You<br/>
                 <div>
                 {(player_card.name==='') &&
                     <div>
-                        Press 'Draw Card!' button to start game.
+                        Who will win?
                     </div>
                 }
                 {(player_card.name!=='') && 
                     <div>
-                        New Card: {player_card.name}
+                        {player_card.name}<br/>
+                        <img src={player_card.image_url} style={{ height: '30vh', width: '10vw' }}/>
                     </div>
                 }
                 </div>

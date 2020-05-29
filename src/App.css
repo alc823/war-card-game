@@ -1,3 +1,24 @@
+/* @import url('https://fonts.googleapis.com/css?family=Dancing+Script|Rokkitt|Shadows+Into+Light|Tangerine&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
+
+.page {
+  background-image: url('https://i.pinimg.com/originals/8b/ef/94/8bef94249eeed8fd417cdfe517a69337.png');
+  height: 100%;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  /* font-family: 'Rokkitt', serif; */
+  font-family: 'Source Code Pro', monospace;
+}
+
 .header {
-  padding: 20px;
+  padding: 10px;
+}
+
+.battlefield {
+  background-image: url('https://digitalsynopsis.com/wp-content/uploads/2017/02/beautiful-color-gradients-backgrounds-047-fly-high.png');
+  color: white;
+  margin-top: 5vh;
+  /* padding-top: 2vh; */
+  /* padding-bottom: 2vh; */
+  height: 295px;
 }

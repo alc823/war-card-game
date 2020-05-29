@@ -1,0 +1,21 @@
+.info {
+    margin-left: 20vw;
+    margin-right: 20vw;
+    background: rgba(146, 172, 255, 0.8);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    border: double;
+    border-color: rgba(170, 146, 255, 0.7);
+}
+
+.score_info {
+    margin-left: 40vw;
+    margin-right: 40vw;
+    background: rgba(146, 172, 255, 0.8);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    border: double;
+    border-color: rgba(170, 146, 255, 0.7);
+}
