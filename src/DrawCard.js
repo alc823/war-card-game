@@ -4,7 +4,7 @@ import { isEmpty } from "lodash";
 
 class DrawCard extends Component {
     render() {
-        const {handleDraw, deck, startOver, robot_score, player_score} = this.props;
+        const {handleDraw, deck, startOver, robot_score, player_score, resetUniverse} = this.props;
         return (
             <div style={{display:"flex", justifyContent:"center"}}>
                 <div>
@@ -21,6 +21,7 @@ class DrawCard extends Component {
                     {isEmpty(deck) &&
                         <div>
                             <button className="button" type="button" onClick={() => startOver()}>Play Again!</button>
+                            <button className="button" type="button" onClick={() => resetUniverse()}>Reset Universe</button>
                         </div>
                     }
                 </div>

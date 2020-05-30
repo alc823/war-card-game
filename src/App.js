@@ -6,31 +6,10 @@ import DrawCard from './DrawCard.js';
 import RoundStatus from './RoundStatus.js';
 import Score from './Score.js';
 import cards from './Cards.js';
-
-// const api = require("deckofcardsapi-client").api;
-// api.sethost(process.env.HOST);
-
-// const axios = require('axios');
-// var host = process.env.HOST || '0.0.0.0';
-// var port = process.env.PORT || 8080;
-// var cors_proxy = require('cors-anywhere');
-
-// (function() {
-//   var cors_api_host = 'cors-anywhere.herokuapp.com';
-//   var cors_api_url = 'https://' + cors_api_host + '/';
-//   var slice = [].slice;
-//   var origin = window.location.protocol + '//' + window.location.host;
-//   var open = XMLHttpRequest.prototype.open;
-//   XMLHttpRequest.prototype.open = function() {
-//       var args = slice.call(arguments);
-//       var targetOrigin = /^https?:\/\/([^\/]+)/i.exec(args[1]);
-//       if (targetOrigin && targetOrigin[0].toLowerCase() !== origin &&
-//           targetOrigin[1] !== cors_api_host) {
-//           args[1] = cors_api_url + args[1];
-//       }
-//       return open.apply(this, args);
-//   };
-// })();
+import Login from './Login.js';
+import { app, base } from './base.js';
+import { Spinner } from '@blueprintjs/core';
+import { isEmpty } from "lodash";
 
 class App extends Component {
 
@@ -65,24 +44,79 @@ class App extends Component {
 
     // booleaan stating whether the player has won the round
     round_winner: false,
+
+    authenticated: false,
+    loading: true
   }
 
-  componentDidMount = () => {
-  //   const api = 'https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1';
-  //   axios.get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
-  //   console.log("deck id: " + api.deck_id);
-  //   .then((response) => {
-  //     this.setState({
-  //       restaurants: response.data.results
-  //     })
-  //     console.log(response.deck_id);
-  //   })
-  //   .catch((e) => {
-  //     console.log("ERROR")
-  //     console.log(e.response.data);
-  //   })
-  //   .then(() => {
-  // });
+  componentWillMount() {
+    this.removeAuthListener = app.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          authenticated: true,
+          loading: false
+        })
+      } else {
+        this.setState({
+          authenticated: false,
+          loading: false
+        })
+      }
+    })
+
+    // this.robotCardRef = base.syncState('robot_card', {
+    //   context: this,
+    //   state: 'robot_card'
+    // });
+    // this.playerCardRef = base.syncState('player_card', {
+    //   context: this,
+    //   state: 'player_card'
+    // })
+
+    // this.robotScoreRef = base.syncState('robot_score', {
+    //   context: this,
+    //   state: 'robot_score'
+    // })
+    // this.playerScoreRef = base.syncState('player_score', {
+    //   context: this,
+    //   state: 'player_score'
+    // })
+    this.robotOverallScoreRef = base.syncState('robot_overall_score', {
+      context: this,
+      state: 'robot_overall_score'
+    })
+    this.playerOverallScoreRef = base.syncState('player_overall_score', {
+      context: this,
+      state: 'player_overall_score'
+    })
+
+    // this.cardsRef = base.syncState('deck', {
+    //   context: this,
+    //   state: 'deck'
+    // })
+    // this.pointHoldRef = base.syncState('point_hold', {
+    //   context: this,
+    //   state: 'point_hold'
+    // })
+    // this.roundWinnerRef = base.syncState('round_winner', {
+    //   context: this,
+    //   state: 'round_winner'
+    // })
+  }
+
+  componentWillUnmount() {
+    this.removeAuthListener();
+    // base.removeBinding(this.robotCardRef);
+    // base.removeBinding(this.playerCardRef);
+    
+    // base.removeBinding(this.robotScoreRef);
+    // base.removeBinding(this.playerScoreRef);
+    base.removeBinding(this.robotOverallScoreRef);
+    base.removeBinding(this.playerOverallScoreRef);
+
+    // base.removeBinding(this.cardsRef);
+    // base.removeBinding(this.pointHoldRef);
+    // base.removeBinding(this.roundWinnerRef);
   }
 
   handleDraw = () => {
@@ -187,43 +221,97 @@ class App extends Component {
     })
   }
 
+  resetUniverse = () => {
+    this.setState({
+      deck: cards,
+      robot_card: {
+        name: '',
+        value: -1,
+        id: -1,
+      },
+      player_card: {
+        name: '',
+        value: -2,
+        id: -2
+      },
+      robot_score: 0,
+      player_score: 0,
+      robot_overall_score: 0,
+      player_overall_score: 0,
+      deck: cards,
+      point_hold: 1, 
+      round_winner: false,
+    })
+  }
+
+  handleLogout = () => {
+    app.auth().signOut().then((user) => {
+        this.setState({
+          authenticated: false
+        })
+    })
+  }
+
   render() {
     return (
       <div className='page'>
-        <h2 className="header" style={{display:"flex", justifyContent:"center"}}>War Card Game</h2>
-        <Score
-          deck={this.state.deck}
-          point_hold={this.state.point_hold}
-          round_winner={this.state.round_winner}
-          robot_score={this.state.robot_score}
-          player_score={this.state.player_score}
-          robot_overall_score={this.state.robot_overall_score}
-          player_overall_score={this.state.player_overall_score}
-        />
-        <div style={{display:"flex", justifyContent: "center", flexWrap: "wrap"}} className='battlefield'>
-          <Robot
-            robot_card={this.state.robot_card}
-          />
-          <Player 
-            player_card={this.state.player_card}
-          />
+
+        <div style={{justifyContent:"center", marginLeft: '42vw'}}>
+          <h2 className="header" style={{display:"inline", justifyContent:"center"}}>War Card Game</h2>
+          {this.state.authenticated &&
+            <button className="button" type="button" onClick={() => this.handleLogout()} style={{marginLeft: '50vw', marginTop:'0vh'}}>Logout</button>
+          }
+          
         </div>
-        <br/>
-        <RoundStatus
+
+        {!this.state.authenticated &&
+          <div>
+            <Login />
+          </div>
+        }
+
+        {this.state.authenticated &&
+        <div>
+          <Score
             deck={this.state.deck}
             point_hold={this.state.point_hold}
             round_winner={this.state.round_winner}
             robot_score={this.state.robot_score}
             player_score={this.state.player_score}
+            robot_overall_score={this.state.robot_overall_score}
+            player_overall_score={this.state.player_overall_score}
           />
-        <DrawCard 
-          taken_out={this.state.taken_out}
-          deck={this.state.deck}
-          handleDraw={this.handleDraw}
-          startOver={this.startOver}
-          robot_score={this.state.robot_score}
-          player_score={this.state.player_score}
-        />
+          <div style={{display:"flex", justifyContent: "center", }} className='battlefield'>
+            <Robot
+              robot_card={this.state.robot_card}
+            />
+            {!isEmpty(this.state.deck) && this.state.player_score === 0 && this.state.robot_score === 0 && 
+              <div style={{marginTop: 120}}>
+                vs.
+              </div>
+            }
+            <Player 
+              player_card={this.state.player_card}
+            />
+          </div>
+          <br/>
+          <RoundStatus
+              deck={this.state.deck}
+              point_hold={this.state.point_hold}
+              round_winner={this.state.round_winner}
+              robot_score={this.state.robot_score}
+              player_score={this.state.player_score}
+            />
+          <DrawCard
+            deck={this.state.deck}
+            handleDraw={this.handleDraw}
+            startOver={this.startOver}
+            robot_score={this.state.robot_score}
+            player_score={this.state.player_score}
+            resetUniverse={this.resetUniverse}
+          />
+        </div>
+        }
       </div>
     );
   }

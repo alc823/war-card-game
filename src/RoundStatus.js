@@ -15,8 +15,7 @@ class RoundStatus extends Component {
                 }
                 {!round_winner && point_hold > 1 && !isEmpty(deck) &&
                     <div>
-                        Tie! {point_hold} points will be give to the winner of the next round.<br/>
-                        {remaining_rounds} rounds left!
+                        Tie! {point_hold} points will be give to the winner of the next round. {remaining_rounds} rounds left!
                     </div>
                 }
                 {!round_winner && point_hold === 1 && robot_score !== 0 && !isEmpty(deck) &&
@@ -24,9 +23,9 @@ class RoundStatus extends Component {
                         Robot has won the round! {remaining_rounds} rounds left!
                     </div>
                 }
-                { robot_score === 0 && player_score === 0 &&
+                { robot_score === 0 && player_score === 0 && point_hold === 1 &&
                 <div>
-                    Press the button below to get the game started!
+                    Press the button below to draw the first card!
                 </div>
                 }
                 
@@ -35,21 +34,18 @@ class RoundStatus extends Component {
                     <div>
                     {robot_score > player_score &&
                         <div>
-                            You finished the game!<br/>
-                            Robot won! Better luck next time!
+                            You finished the game! Robot won! Better luck next time!
                         </div>
 
                     }
                     {robot_score < player_score &&
                         <div>
-                            You finished the game!<br/>
-                            You won! gg wp
+                            You finished the game! You won! gg wp
                         </div>
                     }
                     {robot_score === player_score &&
                         <div>
-                            You finished the game!<br/>
-                            Tie! You are neither a winner nor a loser!
+                            You finished the game! Tie! You neither won nor loss!
                         </div>
                     }
                     </div>

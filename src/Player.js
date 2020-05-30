@@ -14,13 +14,13 @@ class Player extends Component {
             <div className="player" 
             style={{textAlign: "center"}}
             >
-                You<br/>
+            <div style={{display:'flex'}}>
                 <div>
-                {(player_card.name==='') &&
+                {/* {(player_card.name==='') &&
                     <div>
                         Who will win?
                     </div>
-                }
+                } */}
                 {(player_card.name!=='') && 
                     <div>
                         {player_card.name}<br/>
@@ -28,7 +28,10 @@ class Player extends Component {
                     </div>
                 }
                 </div>
-                
+                <div style={{marginLeft: '3vw', marginTop: 100}}>
+                    You
+                </div>
+            </div>
             </div>
         );
     }

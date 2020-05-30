@@ -1,5 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
 
+.login_info {
+    /* justify-content: center; */
+    margin-top: 15vh;
+    margin-bottom: 9vh;
+    /* padding-bottom: 15vh; */
+    padding: 21px;
+    border-radius: 10px;
+    border: double;
+    border-color: rgba(170, 146, 255, 0.7);
+    margin-left: 30vw;
+    margin-right: 30vw;
+    background-color: rgba(146, 172, 255, 0.8);
+    font-size: 16px;
+}
+
+.label {
+    margin-right: 1vw;
+}
+
+.input {
+    margin-bottom: 2vh;
+    width: 20vw;
+    justify-content: center;
+}
+
 .button {
     margin: 15px;
     background: rgba(146, 190, 255, 0.8);

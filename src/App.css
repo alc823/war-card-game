@@ -4,8 +4,9 @@
 .page {
   background-image: url('https://i.pinimg.com/originals/8b/ef/94/8bef94249eeed8fd417cdfe517a69337.png');
   height: 100%;
+  /* width: cover; */
   padding-top: 20px;
-  padding-bottom: 10px;
+  padding-bottom: 8vh;
   /* font-family: 'Rokkitt', serif; */
   font-family: 'Source Code Pro', monospace;
 }
@@ -20,5 +21,27 @@
   margin-top: 5vh;
   /* padding-top: 2vh; */
   /* padding-bottom: 2vh; */
-  height: 295px;
+  /* height: 223px; */
+  height: 38vh;
+}
+
+.button {
+  margin: 15px;
+  background: rgba(146, 190, 255, 0.8);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 10px;
+  border: double;
+  border-color: rgba(170, 146, 255, 0.7);
+  font-family: 'Source Code Pro', monospace;
+}
+
+.button:hover {
+  background: rgba(86, 144, 211, 0.5);
+}
+
+.button:active {
+  background: rgba(94, 94, 94, 0.5);
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
