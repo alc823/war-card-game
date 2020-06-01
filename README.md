@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). First "draft" of software completed 5:23 PM on Tuesday 5/26/2020. Ideal next steps include: integrate an API / find a package for card data, implement UI design, incorporate Firebase, add additional features. Edit made at 8:20 PM on Tuesday 5/26/2020.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). First "draft" of software completed 5:23 PM on Tuesday 5/26/2020.
 
 ## Available Scripts
 
